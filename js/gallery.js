@@ -68,7 +68,7 @@ const galleryBox = document.querySelector(".gallery");
 
 const createGallery = (imagesInfo) => {
   return `
-  <li class="gallery-item">
+  <li class="gallery-item" data-preview="${imagesInfo.preview}">
   <a class="gallery-link" href="${imagesInfo.original}">
   <img
   class="gallery-image"
@@ -93,12 +93,16 @@ const galleryCardClick = (event) => {
     return;
   }
 
-  const galleryImg = event.target.closest(".gallery-image");
+  const galleryCard = event.target.closest(".gallery-item");
+
+  const galleryCardInfo = images.find(
+    (image) => image.preview === galleryCard.dataset.preview
+  );
 
   const createModal = basicLightbox.create(`
-    <img src="${galleryImg.dataset.source}" width="800" height="600">
+    <img src="${galleryCardInfo.original}" width="800" height="600">
     `);
-   
+
   createModal.show();
 };
 
